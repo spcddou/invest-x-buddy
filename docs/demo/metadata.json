@@ -1,11 +1,126 @@
 {
-  "durationSeconds": 123.08,
+  "url": "http://127.0.0.1:3000",
+  "recordedAt": "2026-10-30T14:31:16.672Z",
+  "elapsedSeconds": 101.92,
+  "provider": "codex-cli",
+  "productionBuild": true,
+  "mocked": false,
+  "simulatedFailure": "Invalid BYOK placeholder (format rejected before any OpenAI call)",
+  "resolution": "1280x800",
   "width": 1280,
   "height": 800,
-  "path": "docs/demo/demo.mp4",
-  "liveURL": "https://thesis-lab-mu.vercel.app",
-  "captioned": true,
-  "recordedAt": "2026-10-30T03:00:32.403Z",
-  "screenshots": 13,
-  "decodedSuccessfully": true
+  "durationSeconds": 101.92,
+  "decodeVerified": true,
+  "screenshots": 9,
+  "tools": [
+    {
+      "tool": "memory_read",
+      "status": "ok",
+      "latency": 135,
+      "providers": []
+    },
+    {
+      "tool": "get_quote",
+      "status": "ok",
+      "latency": 4067,
+      "providers": [
+        {
+          "provider": "fuyao",
+          "status": "ok"
+        },
+        {
+          "provider": "eastmoney",
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "tool": "get_financials",
+      "status": "ok",
+      "latency": 4538,
+      "providers": [
+        {
+          "provider": "fuyao",
+          "status": "ok"
+        },
+        {
+          "provider": "eastmoney",
+          "status": "ok"
+        },
+        {
+          "provider": "eastmoney",
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "tool": "get_valuation",
+      "status": "ok",
+      "latency": 5141,
+      "providers": [
+        {
+          "provider": "fuyao",
+          "status": "ok"
+        },
+        {
+          "provider": "eastmoney",
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "tool": "search_announcements",
+      "status": "ok",
+      "latency": 6097,
+      "providers": [
+        {
+          "provider": "ifind",
+          "status": "ok"
+        },
+        {
+          "provider": "cninfo",
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "tool": "verify_thesis",
+      "status": "ok",
+      "latency": 12111,
+      "providers": [
+        {
+          "provider": "fuyao",
+          "status": "ok"
+        },
+        {
+          "provider": "eastmoney",
+          "status": "ok"
+        },
+        {
+          "provider": "fuyao",
+          "status": "ok"
+        },
+        {
+          "provider": "eastmoney",
+          "status": "ok"
+        },
+        {
+          "provider": "eastmoney",
+          "status": "ok"
+        },
+        {
+          "provider": "fuyao",
+          "status": "ok"
+        },
+        {
+          "provider": "ifind",
+          "status": "ok"
+        },
+        {
+          "provider": "cninfo",
+          "status": "ok"
+        }
+      ]
+    }
+  ]
 }

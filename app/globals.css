@@ -4,3 +4,11 @@
 table{width:100%;border-collapse:collapse;font-size:9px;margin-top:10px}td,th{text-align:left;border-bottom:1px solid #dce5f2;padding:7px 5px;overflow-wrap:anywhere}th{font-weight:500}.notice details{font-size:10px;margin-top:7px}.approval label select{display:block;width:100%;font-size:10px;margin:5px 0 12px}
 /* Long provider snippets remain fully inspectable in the source drawer. */
 .evidence-card p{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}.evidence-board,.memo,.comparison,.answer,.watch{scroll-margin-top:80px}
+
+.model-settings{border:1px solid #7d99bb;background:#f4f7fc;margin-bottom:24px}
+.model-settings h2{font-size:16px;margin:0}.model-settings .section-heading{flex-wrap:wrap;gap:10px}
+.model-settings .mode-detail{font-size:12px;line-height:1.6;margin:8px 0 12px;color:#634b26}
+.model-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.model-fields label{display:grid;gap:6px;font-size:12px}
+.model-fields input,.model-fields select{width:100%;min-width:0;padding:9px;border:1px solid #c5cedb;border-radius:6px;background:white}
+.model-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:12px 0}.model-actions label{display:flex;gap:5px;align-items:center;font-size:12px}.model-settings small{display:block;line-height:1.7;color:#617086}
+@media(max-width:600px){.model-fields{grid-template-columns:1fr}}

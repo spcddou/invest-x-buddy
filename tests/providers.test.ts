@@ -40,7 +40,7 @@ it('iFinD retries one transport failure and parses real nested content with requ
   const result=body.method==='initialize'?{protocolVersion:'2025-03-26',capabilities:{tools:{}},serverInfo:{name:'test',version:'1'}}:{content:[{type:'text',text:JSON.stringify({code:1,data:JSON.stringify([{'公告标题':'贵州茅台：半年度报告','公告片段内容':'仅供原文核对的片段','日期':'2026-08-15'}])})}]};
   return Response.json({jsonrpc:'2.0',id:body.id,result});
  }));
- const [r]=await new IfindProvider().fetch(input.company);expect(r.status).toBe('ok');expect(r.retries).toBe(1);expect((r.raw as any).notices).toHaveLength(1);const args=calls.find(c=>c.method==='tools/call').params.arguments;expect(args.time_start).toMatch(/^\d{4}-/);expect(args.time_end).toMatch(/^\d{4}-/);
+ const [r]=await new IfindProvider(fetch).fetch(input.company);expect(r.status).toBe('ok');expect(r.retries).toBe(1);expect((r.raw as any).notices).toHaveLength(1);const args=calls.find(c=>c.method==='tools/call').params.arguments;expect(args.time_start).toMatch(/^\d{4}-/);expect(args.time_end).toMatch(/^\d{4}-/);
 });
 it('public valuation never labels price as multiples and income cross-check has percent unit',()=>{
  const base:SourceResult={id:'eastmoney:x',provider:'eastmoney',title:'行情与估值',url:'https://example.com',status:'ok',fetchedAt:new Date().toISOString(),primary:false,raw:{data:{f43:100,f162:20,f167:4,f124:Date.now()/1000}}};

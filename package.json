@@ -10,9 +10,12 @@
     "test:e2e": "playwright test --workers=1",
     "typecheck": "tsc --noEmit",
     "demo": "node scripts/demo.mjs",
-    "eval": "node scripts/eval.mjs"
+    "eval": "node scripts/eval.mjs",
+    "test:llm": "playwright test --config playwright.llm.config.ts",
+    "demo:llm": "node scripts/record-demo-llm.mjs"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^4.0.105",
     "@modelcontextprotocol/sdk": "latest",
     "@neondatabase/serverless": "^1.2.0",
     "ai": "latest",

@@ -3,8 +3,8 @@
 面向个人投资研究者的 Agent 工作台。把“估值回落但基本面未恶化”一类判断，推进为可修订的计划、真实数据证据链与可追溯研究备忘录。
 
 **Web**：https://thesis-lab-mu.vercel.app （最终生产别名以 [FINAL_STATUS](docs/FINAL_STATUS.md) 为准）  
-**源码**：本目录完整源代码；按用户要求未创建 GitHub repo、未执行 git init / commit / push。提交者需上传到自己的仓库并填写仓库链接。  
-**演示**：[123 秒生产演示 MP4](docs/demo/demo.mp4) · [重录讲稿](docs/demo/SCRIPT.md)
+**源码**：本目录完整源代码；本轮仅只读检查 git status / diff，没有提交或推送。提交者需上传到自己的仓库并填写仓库链接。
+**演示**：[本地 Codex CLI 真实模型演示 MP4](docs/demo/demo.mp4) · [重录讲稿](docs/demo/SCRIPT.md)
 
 ![三栏研究工作台](docs/screenshots/01-workspace.png)
 
@@ -31,19 +31,20 @@ BASE_URL=https://your-app.vercel.app npm run test:e2e
 BASE_URL=https://your-app.vercel.app npm run eval
 ```
 
-Playwright 首次使用需 `npx playwright install chromium`。`npm run demo` 默认录制生产 URL，可用 BASE_URL 覆盖。视频转码需 ffmpeg；脚本可使用 FFMPEG_PATH。
+Playwright 首次使用需 `npx playwright install chromium`。`npm run demo:llm` 录制本地 Codex CLI 真实模型，完整命令见 docs/demo/SCRIPT.md。旧 `npm run demo` 是规则路径脚本。视频转码需 ffmpeg；脚本可使用 FFMPEG_PATH。
 
 ## 环境变量
 
 | 变量 | 用途 / 未配置行为 |
 |---|---|
+| `LLM_PROVIDER` | 设为 `codex-cli` 启用本机 CLI；不设则公开 BYOK / Gateway / 规则路径。Vercel、VERCEL_ENV、DEPLOYMENT_ENV=production 或非 loopback 请求拒绝 CLI |
 | `AI_GATEWAY_API_KEY` | 本地可选；Vercel 部署使用 OIDC。失败显式规则回退 |
 | `AI_GATEWAY_MODEL` | 默认 `openai/gpt-5-mini`，Vercel AI SDK `generateText` / `Output.object` |
 | `DATABASE_URL` | Neon serverless Postgres；缺失或失败退回 localStorage，UI 显示同步状态 |
 | `FUYAO_API_KEY` | 官方 `X-api-key` REST 适配器，无密钥不调用 |
 | `IFIND_TOKEN`（`IFIND_MCP_URL` 可选） | 官方 Streamable HTTP；默认新闻公告服务 URL，Authorization 使用原值；无密钥不调用 |
 
-前轮通过 `npx vercel integration add neon` 创建并连接 Neon，本轮继续复测恢复。所有 `.env*`（包括示例文件）、`.vercel/`、依赖和测试产物被 gitignore 排除，任何密钥都不进入浏览器 bundle 或 trace。[真实协议及开通步骤](docs/PROVIDER_SPECS.md)。
+前轮通过 `npx vercel integration add neon` 创建并连接 Neon，本轮继续复测恢复。所有 `.env*`（包括示例文件）、`.vercel/`、依赖和测试产物被 gitignore 排除，服务端密钥不进入浏览器 bundle 或 trace；用户 BYOK 仅保存在所选浏览器存储。[真实协议及开通步骤](docs/PROVIDER_SPECS.md)。
 
 ## 设计与 Agent 机制
 
@@ -86,7 +87,13 @@ flowchart TD
 
 ## AI 角色与验证
 
-本轮刷新 Vercel OIDC 并确认 `openai/gpt-5-mini` 存在后，请求明确返回 403：账号需要添加有效信用卡以解锁额度。已停止尝试账号开通；当前生产继续使用标注的规则回退。账号所有者操作见 [FINAL_STATUS](docs/FINAL_STATUS.md)。
+所有者不购买 API key 或添加信用卡。公开视频使用**本地 Codex CLI 真实模型**；公网评审使用 BYOK 或明确标注的规则回退。历史 Gateway 403 是账号计费限制，仍保留为可选路径，不再要求所有者开通。
+
+「模型设置」默认 `gpt-4o-mini`（[官方模型页](https://developers.openai.com/api/docs/models/gpt-4o-mini)，存在但已标弃用；实际权限以评审账户为准），可选 [`gpt-5.6-terra`](https://developers.openai.com/api/docs/models/gpt-5.6-terra)。key 默认仅 sessionStorage，勾选记住才写 localStorage；输入框始终密码遮罩，保存后清空，不回显。清除按钮删除两处存储。key 经 HTTPS `x-openai-key` 请求头发送本站 API，再由 AI SDK OpenAI provider 直接调用 OpenAI；不经 Gateway、不写 Neon、日志、trace、导出或记忆。请求日志不采集 headers；遥测关闭。浏览器同源脚本可读本机存储，共享设备不要选择记住。
+
+优先级：用户 key → 显式启用且允许的本地 Codex CLI → Gateway → 规则回退。无效 key 不转用所有者额度；401 / 403 / 429 / 超时 / 格式或守卫失败显示原因与规则回退。所有 LLM 路由均有每 IP 每分钟 120 次的进程内限制（多实例不共享，非生产级分布式限流）。
+
+本地：`LLM_PROVIDER=codex-cli npm run dev`，要求 `~/.local/bin/codex` 已登录。生产构建亦可本机 `LLM_PROVIDER=codex-cli npm start -- --hostname 127.0.0.1`；`NODE_ENV=production` 不等于托管部署。CLI 使用 `codex exec` 只读 sandbox、ephemeral、独立临时目录、忽略用户配置 / 规则、关闭 shell 工具，`--output-schema` / `-o` 后再 Zod 校验，60 秒超时杀进程并删除临时文件。复用同一 planner、工具执行、memo、守卫与审批。仅模型传输不同。[官方非交互模式](https://learn.chatgpt.com/docs/non-interactive-mode)。本地指进程位置，推理仍发送研究上下文到 OpenAI；不是离线模型，也不把订阅登录暴露到公网。CLI token / 单次费用未知、消耗订阅配额；瀑布展示 planner 和 memo 实际时延及超时政策。
 
 模型负责结构化计划、证据审阅、保守 memo 与追问；程序掌握工具权限、依赖、停止、审批、数字允许集和缺口边界。AI 不发明财务数值。模型不可用或格式 / 数字 / 引用 / 分类校验失败时，标记规则回退并保留模板输出。
 

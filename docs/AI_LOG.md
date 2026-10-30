@@ -51,3 +51,19 @@ Peichen 查看真实视频与部署，确认 README 中的限制适合 take-home
 - 逐字段单位复核发现旧公开估值卡的 values 混入价格（元），以及利润表扣非同比单位未标为 %。新增失败回归后改为价格独立证据、PE/PB 仅倍数、扣非同比为 %；单测合计 42。
 
 - 最终生产 eval 5/5（24/24 工具步骤 ok/partial）及 Playwright 4/4。新版现场录制 13 张截图、约 124 秒；系统 PATH 没有 ffmpeg，默认转码报 ENOENT，使用前轮已有临时虚拟环境中的 ffmpeg 完成 MP4 转码，不安装新依赖。
+
+## BYOK + 本地 CLI 续跑（2026-10-30 America/New_York）
+
+- 本轮按最新授权只读运行 git status / diff，接续上次未提交的 BYOK 半成品，没有 commit / push。先读 README / FINAL_STATUS / AI_LOG。图谱未索引本项目，回退文件检查；读随包 Next route 文档、官方 OpenAI 模型页和 CLI 非交互文档、实际 `codex exec --help`。使用 brainstorming / OpenAI Docs / TDD / systematic-debugging / verification-before-completion，无子代理。
+- 所有者明确不支付 API key，不再建议添加信用卡。BYOK 仍供公网评审；本地 CLI 复用 ChatGPT 登录，模型推理仍经过 OpenAI。`NODE_ENV=production` 同时用于本地 next start，不能据此一刀切禁止；测试拒绝 Vercel / 托管 production / 非本机请求。
+- 沿用请求头传 key 的设计、AI SDK OpenAI provider、sessionStorage 默认与 localStorage opt-in、清除 key。credentials 不进入 workspace / prompt，关闭 SDK telemetry；写 Neon、浏览器工作区、API 响应与 JSON 导出前清理 key-like 文本。不输出上游错误 message 或 headers。401/429 回归验证显式回退及错误不泄漏。
+- CLI 仅服务端 execFile、独立临时 cwd，忽略用户配置和项目规则，read-only、ephemeral、禁用 shell、无继承 app keys / 数据库变量；stdin prompt，schema 和最终 JSON 临时文件在 finally 删除。60s 超时 SIGKILL。Zod 与后置计划 / 数字 / 引用 / 分类 / 合规守卫和审批共用。CLI tokens / 单次费用未知，不把估算当账单；planner 也进入时延瀑布。
+- 新增 CLI 5 项测试先失败后通过。BYOK OpenAI 协议 mock 的 Playwright 经真实 SDK 成功，证明模型选公告工具被执行、memo 和追问来自 mock、Neon 请求 / 浏览器研究副本 / 导出不含 key。该 mock 测试不证明真实 OpenAI API 账号可用。
+- 实际本地生产 CLI 规划成功，首次约 24s。首录在检查来源时错误使用中文显示名匹配内部 provider ID（fuyao / ifind），导致断言失败；修正录屏脚本的断言，未修改实际来源或伪造成功。重新完整录制，结果以 metadata.json 为准。旧 Gateway 403 仅是历史观察，不能再描述为本轮全部模型能力。
+- 录屏续查发现：独立 Node fetch 成功，Next 生产路由的同协议调用连续在 connect 阶段 `TypeError / UND_ERR_CONNECT_TIMEOUT`。不是密钥失效或无公告。将该 MCP 底层传输改为 Node 原生 HTTPS 流（SDK、session / Accept、超时、一次重试和解析保留），本地生产路由随即 iFinD ok（约 11.6s）。这是对观测故障的修复，不推断网络根本原因已完全证明。诊断仅含阶段、错误类型、传输代码和公开 endpoint host，无原始错误消息或授权值。构造器使用显式属性赋值，保持 Node strip-types 探测脚本可运行。
+
+- CLI 默认推理强度曾导致 memo 达到 60s 上限并诚实回退；设为 low 后实际 memo 约 12s 通过同一守卫。录屏故障镜头改为末尾无效 BYOK 占位符的入口拒绝，不发送付费请求。iFinD 连通性仍间歇，原生 HTTPS 不保证每次成功，没有放宽源成功断言。
+
+- 最终本地 production build 录制成功，2026-10-30T14:31:16Z，101.92s、1280×800、9 张截图。计划和 memo 均为真实 CLI；memory_read / quote / financials / valuation / announcements / verify 全链完成，扶摇与 iFinD ok；单独记忆批准后确认，再展示无效 BYOK 明确回退。MP4 完整解码通过，未使用模型 / 来源 mock。BYOK SDK mock 最终 1/1（23.3s），单测 60/60。
+
+- 最终部署 `thesis-3sacnnnma-peichenchen741-3307.vercel.app`，别名公网 HTTP 200；部署后 Playwright 5/5（38.6s）。最终 key-like rg 扫描（排除依赖、构建、env、Git / Vercel 状态和测试中间产物）0 个匹配文件；仅输出文件名，没有输出密钥。git diff --check 通过，无 commit / push。

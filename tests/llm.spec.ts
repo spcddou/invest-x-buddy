@@ -1,0 +1,25 @@
+import {test,expect} from '@playwright/test';
+test('OpenAI protocol mock → real SDK → model-selected tool → guarded memo; no key in persistence/export',async({page})=>{
+ const key=['sk','fixture','C'.repeat(32)].join('-');
+ const persisted:string[]=[],tools:string[]=[];
+ page.on('request',r=>{if(r.url().endsWith('/api/workspace')&&r.method()==='PUT')persisted.push(r.postData()||'');if(r.url().endsWith('/api/agent')&&r.method()==='POST'){const b=r.postDataJSON();if(b.action==='step')tools.push(b.run.plan.find((s:{id:string})=>s.id===b.stepId).tool);}});
+ await page.goto('/');await expect(page.getByRole('button',{name:'生成研究计划'})).toBeEnabled({timeout:30000});
+ const field=page.getByLabel('OpenAI API key',{exact:true});await expect(field).toHaveAttribute('type','password');await field.fill(key);
+ await page.getByRole('button',{name:'保存 key',exact:true}).click();await expect(field).toHaveValue('');
+ await page.getByRole('button',{name:'生成研究计划'}).click();
+ await expect(page.getByTestId('model-mode')).toContainText('真实模型 (gpt-4o-mini)',{timeout:30000});
+ await expect(page.getByLabel('步骤 5 目标',{exact:true})).toHaveValue('模型选择公告以补充估值证据');
+ await page.getByRole('button',{name:'批准并继续',exact:true}).click();
+ await expect(page.getByTestId('approval-card')).toContainText('审阅证据与分歧',{timeout:100000});
+ expect(tools).toContain('search_announcements');expect(tools).not.toContain('get_kline');
+ await page.getByRole('button',{name:'批准并继续',exact:true}).click();
+ await expect(page.getByTestId('memo')).toContainText('模型审阅：');await expect(page.getByTestId('memo')).toContainText('数字核对 通过');
+ await expect(page.getByTestId('model-mode')).toContainText('真实模型 (gpt-4o-mini)');
+ await page.getByLabel('追问',{exact:true}).fill('需要什么证据？');await page.getByRole('button',{name:'追问',exact:true}).click();await expect(page.locator('.answer')).toContainText('模型追问：');
+ await page.getByRole('button',{name:'运行轨迹',exact:true}).click();
+ const downloaded=page.waitForEvent('download');await page.getByTitle('导出 trace JSON').click();const download=await downloaded;
+ const stream=await download.createReadStream();let exported='';for await(const chunk of stream!)exported+=chunk;
+ expect(exported.includes(key)).toBe(false);expect(persisted.length).toBeGreaterThan(0);expect(persisted.some(p=>p.includes(key))).toBe(false);
+ const browserCopy=await page.evaluate(()=>localStorage.getItem('invest-x-buddy-v2'));expect(browserCopy!.includes(key)).toBe(false);
+ await page.getByRole('button',{name:'清除 / 忘记 key'}).click();
+});

@@ -1,4 +1,5 @@
 import {z} from 'zod';
+import {isAdvice} from './engine';
 import type {Research,SourceResult} from './types';
 export const MAX_STEPS=10;
 export const MAX_COST=0.05;
@@ -20,6 +21,9 @@ export function validatePlan(plan:PlanStep[]){
  const errors:string[]=[];const seen=new Set<string>();
  if(!plan.length||plan.length>MAX_STEPS)errors.push('计划步骤超过预算或为空');
  for(const s of plan){if(!stepSchema.safeParse(s).success)errors.push('步骤格式无效');if(seen.has(s.id))errors.push('步骤 ID 重复');if(s.dependsOn.some(d=>!seen.has(d)))errors.push('依赖必须在当前步骤之前');seen.add(s.id);if(['memory_write','compare_entities'].includes(s.tool))errors.push('该能力需通过专用审批入口调用');}
+ if(plan[0]?.tool!=='memory_read')errors.push('必须先读取记忆');
+ if(plan.some(s=>isAdvice(s.goal+' '+s.doneCriteria)))errors.push('计划越过研究边界');
+ if(plan.slice(0,-1).some(s=>!plan.at(-1)?.dependsOn.includes(s.id)))errors.push('核验步骤必须依赖全部取证步骤');
  if(plan.filter(s=>s.tool==='verify_thesis').length!==1||plan.at(-1)?.tool!=='verify_thesis')errors.push('必须以唯一 verify_thesis 收尾');
  return {ok:!errors.length,errors};
 }

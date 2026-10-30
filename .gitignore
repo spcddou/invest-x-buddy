@@ -9,3 +9,5 @@ docs/demo/demo.webm
 
 *.tsbuildinfo
 coverage/
+docs/demo/llm/raw/
+docs/demo/llm/demo-llm.webm

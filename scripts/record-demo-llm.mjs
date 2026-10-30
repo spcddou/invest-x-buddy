@@ -1,0 +1,52 @@
+import {chromium,expect} from '@playwright/test';
+import fs from 'node:fs/promises';
+import {spawnSync} from 'node:child_process';
+const url=process.env.BASE_URL||'http://127.0.0.1:3000';
+if(!['localhost','127.0.0.1'].includes(new URL(url).hostname))throw new Error('This recording requires local next start with LLM_PROVIDER=codex-cli.');
+const dir='docs/demo';await fs.mkdir(dir+'/raw',{recursive:true});await fs.mkdir('docs/screenshots',{recursive:true});
+const browser=await chromium.launch();
+const context=await browser.newContext({viewport:{width:1280,height:800},recordVideo:{dir:dir+'/raw',size:{width:1280,height:800}}});
+const page=await context.newPage();const started=Date.now();let complete=false;
+const deadline=setTimeout(()=>void context.close(),175000);
+const caption=async text=>page.evaluate(text=>{let el=document.getElementById('demo-caption');if(!el){el=document.createElement('div');el.id='demo-caption';el.style.cssText='position:fixed;bottom:12px;left:160px;right:160px;padding:12px 18px;background:#112e30;color:white;border-radius:8px;z-index:99999;font:15px sans-serif;box-shadow:0 3px 20px #0004';document.body.append(el);}el.textContent=text;},text);
+const snap=async name=>page.screenshot({path:`docs/screenshots/${name}.png`});
+const hold=ms=>page.waitForTimeout(ms);
+const tools=[];
+page.on('response',async r=>{if(r.url().endsWith('/api/agent')){const d=await r.json().catch(()=>null);if(d?.tool){tools.push(d);console.log(JSON.stringify({tool:d.tool,mode:d.raw?.ai,rejected:d.raw?.numberCheck?.rejected,latency:d.latency,providers:d.sources.map(s=>({provider:s.provider,status:s.status}))}));}}});
+try{
+ await page.goto(url);await expect(page.getByRole('button',{name:'生成研究计划'})).toBeEnabled({timeout:30000});
+ await caption('本地 production build · Codex CLI 订阅登录。真实模型规划与 memo；扶摇 / iFinD 实时取证。');await snap('01-workspace');await hold(3000);
+ await page.getByRole('button',{name:'生成研究计划'}).click();
+ await expect(page.getByTestId('model-mode')).toHaveText('真实模型 (Codex CLI · 本地)',{timeout:70000});
+ await caption('模型选择工具、输入与依赖，程序校验计划。口径确认后才开始执行。');await snap('02-plan');await hold(4000);
+ await page.getByRole('button',{name:'批准并继续',exact:true}).click();
+ await expect(page.getByTestId('approval-card')).toContainText('审阅证据与分歧',{timeout:105000});
+ await expect(page.getByTestId('model-mode')).toHaveText('真实模型 (Codex CLI · 本地)');
+ const sources=tools.flatMap(t=>t.sources);console.log(JSON.stringify({sourceStatus:sources.map(s=>({provider:s.provider,status:s.status,reason:s.reason}))}));for(const provider of ['fuyao','ifind'])if(!sources.some(s=>s.provider.includes(provider)&&['ok','partial'].includes(s.status)))throw new Error('Missing real source '+provider);
+ await caption('扶摇、iFinD 的真实返回进入证据；供应商时点、口径和缺失保留，缓存命中也明确标注。');
+ await page.getByTestId('evidence-board').evaluate(el=>el.scrollIntoView({block:'start'}));await snap('03-evidence');await hold(5000);
+ await page.getByRole('button',{name:'批准并继续',exact:true}).click();await page.getByTestId('memo').evaluate(el=>el.scrollIntoView({block:'start'}));
+ await expect(page.getByTestId('memo')).toContainText('真实模型 (Codex CLI · 本地)');await caption('真实模型 memo 通过数字、引用与分类核对。事实、推断和不确定分开，强制保留证据缺口。');await snap('04-memo');await hold(6000);
+ await page.locator('.claim .citations button').first().click();await caption('结论可回查原始字段、来源、报告期、单位与数据时点。');await snap('05-source');await hold(4000);await page.getByRole('button',{name:'关闭来源'}).click();
+ await page.getByRole('button',{name:'运行轨迹',exact:true}).click();await caption('瀑布包含模型计划与 memo 实际时延。CLI 每次超时 60s；订阅 token / 单次费用未知。');await snap('06-waterfall');await hold(4000);
+ await page.getByRole('button',{name:'写入长期记忆'}).click();await expect(page.getByTestId('approval-card')).toContainText('批准写入长期记忆');await caption('记忆写入需要单独批准；检查点不等于长期笔记。');await snap('07-memory-approval');await hold(3500);await page.getByRole('button',{name:'批准并继续',exact:true}).click();
+ await expect(page.getByText('已批准并写入长期记忆。',{exact:true})).toBeVisible();await page.getByRole('button',{name:/^长期记忆/}).click();await caption('已确认写入。公开视频使用本地 CLI；公网评估使用 BYOK 或明确标注的规则回退。');await snap('08-memory-confirmed');await hold(3500);
+ await page.getByRole('button',{name:/^研究空间/}).click();
+ const field=page.getByLabel('OpenAI API key',{exact:true});await expect(field).toHaveAttribute('type','password');await field.fill('invalid-demo-placeholder');await page.getByRole('button',{name:'保存 key',exact:true}).click();await expect(field).toHaveValue('');
+ await page.getByRole('button',{name:'生成研究计划'}).click();await expect(page.locator('.mode-detail')).toContainText('格式无效');await expect(page.getByTestId('model-mode')).toHaveText('规则回退');
+ await page.getByRole('region',{name:'模型设置'}).evaluate(el=>el.scrollIntoView({block:'start'}));await caption('故障演示：输入无效格式占位符，明确规则回退；未发送付费 OpenAI 请求。失败不会借用所有者额度。');await snap('09-invalid-key-fallback');await hold(5000);await page.getByRole('button',{name:'清除 / 忘记 key'}).click();
+ const wait=65000-(Date.now()-started);if(wait>0)await hold(wait);complete=true;
+}finally{
+ clearTimeout(deadline);const video=page.video();await context.close();await browser.close();
+ if(complete){await fs.copyFile(await video.path(),dir+'/demo.webm');}
+}
+if(!complete)throw new Error('No successful real-model demo produced.');
+const ffmpeg=process.env.FFMPEG_PATH||'ffmpeg';
+const result=spawnSync(ffmpeg,['-y','-i',dir+'/demo.webm','-c:v','libx264','-pix_fmt','yuv420p','-r','25','-movflags','+faststart',dir+'/demo.mp4'],{stdio:'ignore'});
+if(result.status!==0)throw new Error('MP4 conversion failed');
+const verify=spawnSync(ffmpeg,['-v','error','-i',dir+'/demo.mp4','-f','null','-'],{encoding:'utf8'});if(verify.status!==0||verify.stderr)throw new Error('MP4 decode failed');
+const info=spawnSync(ffmpeg,['-i',dir+'/demo.mp4'],{encoding:'utf8'}).stderr;
+const duration=info.match(/Duration: (\d+):(\d+):(\d+\.\d+)/);if(!duration||!info.includes('1280x800'))throw new Error('Missing video metadata');
+const elapsed=Number(duration[1])*3600+Number(duration[2])*60+Number(duration[3]);if(elapsed<60||elapsed>180)throw new Error('Demo duration must be 60–180 seconds');
+await fs.writeFile(dir+'/metadata.json',JSON.stringify({url,recordedAt:new Date().toISOString(),elapsedSeconds:elapsed,provider:'codex-cli',productionBuild:true,mocked:false,simulatedFailure:'Invalid BYOK placeholder (format rejected before any OpenAI call)',resolution:'1280x800',width:1280,height:800,durationSeconds:elapsed,decodeVerified:true,screenshots:9,tools:tools.map(t=>({tool:t.tool,status:t.status,latency:t.latency,providers:t.sources.map(s=>({provider:s.provider,status:s.status}))}))},null,2));
+console.log('Verified real-model demo: docs/demo/demo.mp4');

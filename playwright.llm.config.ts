@@ -1,0 +1,2 @@
+import {defineConfig} from '@playwright/test';
+export default defineConfig({testDir:'./tests',testMatch:'llm.spec.ts',timeout:120000,workers:1,use:{baseURL:'http://127.0.0.1:3001',viewport:{width:1280,height:800},trace:'off',screenshot:'off',video:'off'},reporter:'list',webServer:[{command:'node scripts/mock-openai.mjs',port:4011,reuseExistingServer:false},{command:'BYOK_TEST_BASE_URL=http://127.0.0.1:4011/v1 npm run dev -- --hostname 127.0.0.1 --port 3001',url:'http://127.0.0.1:3001',reuseExistingServer:false}]});

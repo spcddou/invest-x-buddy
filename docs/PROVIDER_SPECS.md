@@ -30,3 +30,7 @@ https://s.thsi.cn/cd/ifind-java-ds-bff-web-container/ifind-mcp-web/skills/ifind-
 默认扶摇 / iFinD 主源；Eastmoney / CNINFO 是标注的补充 / 回退。工具按端点取数，扶摇数值独立生成证据。iFinD MCP content.text 为 JSON `{code:1,data:"[公告片段数组]"}`，须解析两层 JSON；与扶摇 `code=0` 不同。片段保留标题、日期、原文，不进入数值允许集。公开财务同比保持原来源；不同统计口径或报告期不得覆盖。`primary` 仅标识原始披露属性，调用优先级由主源先取、公开分列的路由实现。
 
 本轮 SDK 连接曾出现瞬时 fetch failed；补充完整请求超时和一次重试。扶摇 HTTP 429 / code 4001 不立即重试，遵守官网限流要求。除原有重试、实际观察到的信封/参数/时点校验外，未增加低概率防御框架。
+
+## 本地生产传输修复（BYOK / CLI 续跑）
+
+同一 iFinD 参数独立 Node 成功，但 Next 生产路由 fetch 连续 connect timeout（UND_ERR_CONNECT_TIMEOUT）。本轮对该 MCP 使用 Node 原生 HTTPS 流作 SDK fetch transport，避免 Next fetch 包装路径；保留 SDK 初始化 / 会话 / Accept、18s 完整请求超时和一次重试、原始 Authorization、不把公告片段当全文。生产路由已现场返回成功证据。错误诊断只保存阶段、错误类型、传输代码及公开 endpoint host，不含 headers / 错误 message。

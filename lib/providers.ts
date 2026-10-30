@@ -1,3 +1,5 @@
+import {request as httpsRequest} from 'node:https';
+import {Readable} from 'node:stream';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
 import type { Company, SourceResult } from './types';
@@ -59,6 +61,18 @@ export class FuyaoProvider implements DataProvider {
 }
 export class IfindProvider implements DataProvider {
  name='ifind';
+ // Native HTTP transport avoids Next's patched fetch; MCP retains streaming/session semantics.
+ private readonly fetcher:typeof fetch;
+ constructor(fetcher:typeof fetch=(url,init)=>new Promise((resolve,reject)=>{
+  const request=httpsRequest(String(url),{method:init?.method,headers:Object.fromEntries(new Headers(init?.headers)),signal:init?.signal??undefined},response=>{
+   const headers=new Headers();for(let i=0;i<response.rawHeaders.length;i+=2)headers.append(response.rawHeaders[i],response.rawHeaders[i+1]);
+   const empty=[202,204,205,304].includes(response.statusCode!);
+   resolve(new Response(empty?null:Readable.toWeb(response) as ReadableStream,{status:response.statusCode!,headers}));
+   if(empty)response.resume();
+  });
+  request.on('error',reject);request.end(init?.body as string|undefined);
+ })){this.fetcher=fetcher;}
+
  async fetch(c:Company):Promise<SourceResult[]>{
   const start=Date.now();
   const url=process.env.IFIND_MCP_URL||'https://api-mcp.51ifind.com:8643/ds-mcp-servers/hexin-ifind-ds-news-mcp';
@@ -67,10 +81,13 @@ export class IfindProvider implements DataProvider {
   for(let attempt=0;attempt<2;attempt++){
   const client=new Client({name:'codex',version:'2.1.0'});
   // Bound the whole transport request as well as SDK RPC waiting; do not expose exception bodies or auth headers.
-  const transport=new StreamableHTTPClientTransport(new URL(url),{requestInit:{headers:{Authorization:process.env.IFIND_TOKEN,'User-Agent':'codex'}},fetch:(url,init)=>fetch(url,{...init,signal:AbortSignal.any([...(init?.signal?[init.signal]:[]),AbortSignal.timeout(18000)])})});
+  const transport=new StreamableHTTPClientTransport(new URL(url),{requestInit:{headers:{Authorization:process.env.IFIND_TOKEN,'User-Agent':'codex'}},fetch:(url,init)=>this.fetcher(url,{...init,signal:AbortSignal.any([...(init?.signal?[init.signal]:[]),AbortSignal.timeout(18000)])})});
+  let phase='connect';
   try{
    await client.connect(transport,{timeout:18000});
+   phase='tool';
    const raw=await client.callTool({name:'search_notice',arguments:{query:`${c.name} ${c.code} 最新定期报告 主营业务 非经常损益`,time_start:new Date(Date.now()-365*86400000).toISOString().slice(0,10),time_end:new Date().toISOString().slice(0,10),size:3}},undefined,{timeout:18000});
+   phase='parse';
    const text=('content' in raw?raw.content:[]) as {type:string;text?:string}[];
    const envelope=JSON.parse(text.filter(x=>x.type==='text').map(x=>x.text).join(''));
    if(raw.isError||envelope.code!==1)throw new Error('iFinD 业务错误');
@@ -78,7 +95,7 @@ export class IfindProvider implements DataProvider {
    if(!Array.isArray(rows))throw new Error('iFinD 公告结构无效');
    const notices=rows.filter(r=>typeof r['公告标题']==='string'&&r['公告标题'].includes(c.name)&&typeof r['公告片段内容']==='string');
    return [{...base,status:notices.length?'ok':'empty',raw:{response:raw,notices},latency:Date.now()-start,retries:attempt,reason:'主数据源：iFinD search_notice 公告语义片段；不是全文或定量字段'}];
-  }catch{if(attempt===1)return [{...base,status:'error',retries:1,latency:Date.now()-start,reason:'iFinD MCP 连接 / 调用失败或超时；已重试一次，转公开 CNINFO 公告入口'}];}
+  }catch(error){if(attempt===1){const e=error as {name?:string;cause?:{code?:string}};return [{...base,status:'error',retries:1,latency:Date.now()-start,reason:'iFinD MCP 连接 / 调用失败或超时；已重试一次，转公开 CNINFO 公告入口',raw:{phase,errorType:e.name,transportCode:e.cause?.code,endpointHost:new URL(url).host}}];}}
   finally{await client.close().catch(()=>{});}
   }
   return [];
