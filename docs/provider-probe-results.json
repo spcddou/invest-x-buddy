@@ -1,0 +1,1008 @@
+{
+  "generatedAt": "2026-10-30T02:56:08.508Z",
+  "results": [
+    {
+      "company": {
+        "code": "600519",
+        "name": "贵州茅台"
+      },
+      "numberCheck": {
+        "ok": true,
+        "rejected": []
+      },
+      "conflicts": [
+        {
+          "title": "跨供应商字段 / 报告期分歧：扶摇合并营业收入",
+          "evidenceIds": [
+            "E4",
+            "E7"
+          ],
+          "resolution": "报告期或统计口径不一致，不能直接比较；保留两值，不平均、不覆盖。营业收入与营业总收入等范围差异必须先对齐。"
+        },
+        {
+          "title": "跨供应商字段 / 报告期分歧：扶摇行情快照",
+          "evidenceIds": [
+            "E1",
+            "E2"
+          ],
+          "resolution": "报告期或统计口径不一致，不能直接比较；保留两值，不平均、不覆盖。营业收入与营业总收入等范围差异必须先对齐。"
+        },
+        {
+          "title": "跨供应商估值口径不同",
+          "evidenceIds": [
+            "E14",
+            "E3"
+          ],
+          "resolution": "扶摇 TTM / MRQ 与公开动态 PE 并列；不是同口径数值冲突，不能平均、互换或按大小选择。"
+        },
+        {
+          "title": "营收与扣非利润出现相反信号",
+          "evidenceIds": [
+            "E9",
+            "E11"
+          ],
+          "resolution": "两项指标口径不同，不互相抵消。按同一累计报告期并列呈现；“盈利改善”以扣非利润指标判断，收入增长不能覆盖利润下降。"
+        },
+        {
+          "title": "同源交叉核验：扣非口径一致",
+          "evidenceIds": [
+            "E11",
+            "E13"
+          ],
+          "resolution": "主要指标与利润表在显示精度内一致；均为二手转录，没有独立一手核验。更正公告或更新版本优先，但需人工核读原始 PDF 后才能解决。"
+        }
+      ],
+      "sources": [
+        {
+          "provider": "fuyao",
+          "title": "行情快照",
+          "status": "ok",
+          "reason": "主数据源：扶摇 REST",
+          "fetchedAt": "2026-10-30T02:54:33.021Z",
+          "asOf": "2026-10-30T02:54:34.000Z",
+          "latency": 2169,
+          "retries": 0,
+          "sample": [
+            {
+              "thscode": "600519.SH",
+              "ticker": "600519",
+              "volume": 2322407,
+              "turnover": 3175584400,
+              "last_price": 1369.99,
+              "price_change": 15.99,
+              "price_change_ratio_pct": 1.180945,
+              "open_price": 1363,
+              "high_price": 1376,
+              "low_price": 1352.98,
+              "prev_price": 1354
+            }
+          ]
+        },
+        {
+          "provider": "eastmoney",
+          "title": "行情与估值",
+          "status": "ok",
+          "reason": "公开补充 / 回退：与主源分列核验",
+          "fetchedAt": "2026-10-30T02:54:52.068Z",
+          "asOf": "行情时点未知",
+          "latency": 2564,
+          "retries": 0
+        },
+        {
+          "provider": "fuyao",
+          "title": "合并利润表",
+          "status": "ok",
+          "reason": "主数据源：扶摇 REST",
+          "fetchedAt": "2026-10-30T02:54:49.198Z",
+          "asOf": "2026-06-30",
+          "latency": 871,
+          "retries": 0,
+          "sample": [
+            {
+              "thscode": "600519.SH",
+              "ticker": "600519",
+              "period": "quarterly",
+              "fiscal_year": 2026,
+              "fiscal_period": "Q2",
+              "report_date_ms": 1786723200000,
+              "period_end_ms": 1782748800000,
+              "currency": "CNY",
+              "operating_income": 90703260964.48,
+              "operating_costs": 9473762565.88,
+              "operating_expenses": 30946044878.08,
+              "sales_fee": 3206308341.53,
+              "manage_fee": 3635355263.82,
+              "research_and_development_expenses": 114926219.6,
+              "operating_profit": 61411291686.27,
+              "interest_expenses": 76587662.57,
+              "profit_total": 61438419177.29,
+              "income_tax_expense": 15405088610.51,
+              "net_profit": 46033330566.78,
+              "parent_holder_net_profit": 44516880421.86,
+              "basic_eps": 35.57
+            }
+          ]
+        },
+        {
+          "provider": "eastmoney",
+          "title": "主要财务指标",
+          "status": "ok",
+          "reason": "公开补充 / 回退：与主源分列核验",
+          "fetchedAt": "2026-10-30T02:54:50.070Z",
+          "asOf": "2026-06-30",
+          "latency": 1666,
+          "retries": 0
+        },
+        {
+          "provider": "eastmoney",
+          "title": "利润表",
+          "status": "ok",
+          "reason": "公开补充 / 回退：与主源分列核验",
+          "fetchedAt": "2026-10-30T02:54:50.071Z",
+          "asOf": "2026-06-30",
+          "latency": 1323,
+          "retries": 0
+        },
+        {
+          "provider": "fuyao",
+          "title": "估值TTM/MRQ",
+          "status": "ok",
+          "reason": "主数据源：扶摇 REST",
+          "fetchedAt": "2026-10-30T02:54:51.735Z",
+          "asOf": "2026-10-30T02:54:51.000Z",
+          "latency": 333,
+          "retries": 0,
+          "sample": [
+            {
+              "thscode": "600519.SH",
+              "ticker": "600519",
+              "name": "贵州茅台",
+              "pe_ttm": 21.02776,
+              "pe_mrq": 19.232865,
+              "pb_mrq": 6.815323,
+              "ps_ttm": 9.884491,
+              "pcf_ttm": 14.378355
+            }
+          ]
+        },
+        {
+          "provider": "fuyao",
+          "title": "历史K线",
+          "status": "ok",
+          "reason": "主数据源：扶摇 REST",
+          "fetchedAt": "2026-10-30T02:54:54.633Z",
+          "asOf": "2026-10-29T16:00:00.000Z",
+          "latency": 303,
+          "retries": 0,
+          "sample": [
+            {
+              "date_ms": 1783008000000,
+              "volume": 3426755,
+              "turnover": 4099266243.41,
+              "open_price": 1205.24,
+              "high_price": 1210.14,
+              "low_price": 1185,
+              "close_price": 1194.45
+            }
+          ]
+        },
+        {
+          "provider": "eastmoney",
+          "title": "日K线",
+          "status": "error",
+          "reason": "公开补充 / 回退：与主源分列核验；fetch failed；已重试一次",
+          "fetchedAt": "2026-10-30T02:54:54.936Z",
+          "asOf": "未取得",
+          "latency": 2154,
+          "retries": 1
+        },
+        {
+          "provider": "ifind",
+          "title": "iFinD 公告片段",
+          "status": "ok",
+          "reason": "主数据源：iFinD search_notice 公告语义片段；不是全文或定量字段",
+          "fetchedAt": "2026-10-30T02:54:57.091Z",
+          "asOf": "2026-04-17",
+          "latency": 9538,
+          "retries": 0,
+          "sample": [
+            {
+              "公告标题": "贵州茅台：贵州茅台2025年第三季度报告",
+              "公告片段内容": "以下是根据提供的背景材料生成的摘要：\n\n 贵州茅台2025年三季度业绩表现分析\n\n 主要财务数据概览  \n1. 营业收入：报告期内，贵州茅台实现营业收入390.64亿元，同比增长0.56%；从全年累计来看，其营业收入达到约1284.54亿元，同比上升6.36%。这表明公司在高端白酒市场保持稳定增长态势。\n\n2. 净利润：归属于上市公司的净利润为192.24亿元，同比增长0.48%；扣除非经常性损益后的净利润同样录得小幅上涨，达到了192…",
+              "日期": "2025-10-30"
+            }
+          ]
+        },
+        {
+          "provider": "cninfo",
+          "title": "公司公告",
+          "status": "ok",
+          "reason": "公开补充 / 回退：CNINFO 原始公告入口",
+          "fetchedAt": "2026-10-30T02:55:06.630Z",
+          "asOf": "2026-04-16",
+          "latency": 2424,
+          "retries": 0
+        }
+      ],
+      "officialEvidence": [
+        {
+          "provider": "fuyao",
+          "title": "扶摇行情快照",
+          "metric": "quotePrice",
+          "period": "2026-10-30T02:54:34.000Z",
+          "unit": "元",
+          "basis": "最新成交价；CNY",
+          "asOf": "2026-10-30T02:54:34.000Z",
+          "values": {
+            "price": 1369.99
+          }
+        },
+        {
+          "provider": "fuyao",
+          "title": "扶摇合并营业收入",
+          "metric": "operating_income",
+          "period": "2026-06-30",
+          "unit": "元",
+          "basis": "合并利润表；年初至报告期末累计；CNY",
+          "asOf": "2026-06-30",
+          "values": {
+            "operating_income": 90703260964.48
+          }
+        },
+        {
+          "provider": "fuyao",
+          "title": "扶摇合并营业利润",
+          "metric": "operating_profit",
+          "period": "2026-06-30",
+          "unit": "元",
+          "basis": "合并利润表；年初至报告期末累计；CNY",
+          "asOf": "2026-06-30",
+          "values": {
+            "operating_profit": 61411291686.27
+          }
+        },
+        {
+          "provider": "fuyao",
+          "title": "扶摇合并归母净利润",
+          "metric": "parent_holder_net_profit",
+          "period": "2026-06-30",
+          "unit": "元",
+          "basis": "合并利润表；年初至报告期末累计；CNY",
+          "asOf": "2026-06-30",
+          "values": {
+            "parent_holder_net_profit": 44516880421.86
+          }
+        },
+        {
+          "provider": "fuyao",
+          "title": "扶摇市盈率 TTM",
+          "metric": "pe_ttm",
+          "period": "2026-10-30T02:54:51.000Z",
+          "unit": "倍",
+          "basis": "TTM",
+          "asOf": "2026-10-30T02:54:51.000Z",
+          "values": {
+            "pe_ttm": 21.03
+          }
+        },
+        {
+          "provider": "fuyao",
+          "title": "扶摇市盈率 MRQ",
+          "metric": "pe_mrq",
+          "period": "2026-10-30T02:54:51.000Z",
+          "unit": "倍",
+          "basis": "MRQ",
+          "asOf": "2026-10-30T02:54:51.000Z",
+          "values": {
+            "pe_mrq": 19.23
+          }
+        },
+        {
+          "provider": "fuyao",
+          "title": "扶摇市净率 MRQ",
+          "metric": "pb_mrq",
+          "period": "2026-10-30T02:54:51.000Z",
+          "unit": "倍",
+          "basis": "MRQ",
+          "asOf": "2026-10-30T02:54:51.000Z",
+          "values": {
+            "pb_mrq": 6.82
+          }
+        },
+        {
+          "provider": "fuyao",
+          "title": "扶摇价格背景",
+          "metric": "priceChange",
+          "period": "2026-07-03 至 2026-10-30",
+          "unit": "%",
+          "basis": "不复权窗口首尾",
+          "asOf": "2026-10-29T16:00:00.000Z",
+          "values": {
+            "change": 14.68
+          }
+        },
+        {
+          "provider": "ifind",
+          "title": "贵州茅台：贵州茅台2025年第三季度报告",
+          "metric": "reportBody",
+          "period": "2025-10-30",
+          "unit": "原文片段（未结构化）",
+          "basis": "公告语义检索；非全文",
+          "asOf": "2025-10-30",
+          "values": {}
+        },
+        {
+          "provider": "ifind",
+          "title": "贵州茅台：贵州茅台2026年第一季度报告",
+          "metric": "reportBody",
+          "period": "2026-04-25",
+          "unit": "原文片段（未结构化）",
+          "basis": "公告语义检索；非全文",
+          "asOf": "2026-04-25",
+          "values": {}
+        },
+        {
+          "provider": "ifind",
+          "title": "贵州茅台：贵州茅台2025年年度报告",
+          "metric": "reportBody",
+          "period": "2026-04-17",
+          "unit": "原文片段（未结构化）",
+          "basis": "公告语义检索；非全文",
+          "asOf": "2026-04-17",
+          "values": {}
+        }
+      ]
+    },
+    {
+      "company": {
+        "code": "300750",
+        "name": "宁德时代"
+      },
+      "numberCheck": {
+        "ok": true,
+        "rejected": []
+      },
+      "conflicts": [
+        {
+          "title": "跨供应商字段 / 报告期分歧：扶摇合并营业收入",
+          "evidenceIds": [
+            "E4",
+            "E7"
+          ],
+          "resolution": "报告期或统计口径不一致，不能直接比较；保留两值，不平均、不覆盖。营业收入与营业总收入等范围差异必须先对齐。"
+        },
+        {
+          "title": "跨供应商字段 / 报告期分歧：扶摇行情快照",
+          "evidenceIds": [
+            "E1",
+            "E2"
+          ],
+          "resolution": "报告期或统计口径不一致，不能直接比较；保留两值，不平均、不覆盖。营业收入与营业总收入等范围差异必须先对齐。"
+        },
+        {
+          "title": "跨供应商估值口径不同",
+          "evidenceIds": [
+            "E14",
+            "E3"
+          ],
+          "resolution": "扶摇 TTM / MRQ 与公开动态 PE 并列；不是同口径数值冲突，不能平均、互换或按大小选择。"
+        },
+        {
+          "title": "同源交叉核验：扣非口径一致",
+          "evidenceIds": [
+            "E11",
+            "E13"
+          ],
+          "resolution": "主要指标与利润表在显示精度内一致；均为二手转录，没有独立一手核验。更正公告或更新版本优先，但需人工核读原始 PDF 后才能解决。"
+        }
+      ],
+      "sources": [
+        {
+          "provider": "fuyao",
+          "title": "行情快照",
+          "status": "ok",
+          "reason": "主数据源：扶摇 REST",
+          "fetchedAt": "2026-10-30T02:55:09.065Z",
+          "asOf": "2026-10-30T02:55:09.000Z",
+          "latency": 1380,
+          "retries": 0,
+          "sample": [
+            {
+              "thscode": "300750.SZ",
+              "ticker": "300750",
+              "volume": 19847754,
+              "turnover": 4613528700,
+              "last_price": 232.54,
+              "price_change": 3.47,
+              "price_change_ratio_pct": 1.514821,
+              "open_price": 230.85,
+              "high_price": 235.25,
+              "low_price": 228.02,
+              "prev_price": 229.07
+            }
+          ]
+        },
+        {
+          "provider": "eastmoney",
+          "title": "行情与估值",
+          "status": "ok",
+          "reason": "公开补充 / 回退：与主源分列核验",
+          "fetchedAt": "2026-10-30T02:55:14.342Z",
+          "asOf": "行情时点未知",
+          "latency": 631,
+          "retries": 0
+        },
+        {
+          "provider": "fuyao",
+          "title": "合并利润表",
+          "status": "ok",
+          "reason": "主数据源：扶摇 REST",
+          "fetchedAt": "2026-10-30T02:55:12.496Z",
+          "asOf": "2026-09-30",
+          "latency": 714,
+          "retries": 0,
+          "sample": [
+            {
+              "thscode": "300750.SZ",
+              "ticker": "300750",
+              "period": "quarterly",
+              "fiscal_year": 2026,
+              "fiscal_period": "Q3",
+              "report_date_ms": 1792512000000,
+              "period_end_ms": 1790697600000,
+              "currency": "CNY",
+              "operating_income": 442137424000,
+              "operating_costs": 341695013000,
+              "operating_expenses": 374990457000,
+              "sales_fee": 3371025000,
+              "manage_fee": 9315309000,
+              "research_and_development_expenses": 18516986000,
+              "operating_profit": 80933059000,
+              "interest_expenses": null,
+              "profit_total": 81028004000,
+              "income_tax_expense": 11529551000,
+              "net_profit": 69498453000,
+              "parent_holder_net_profit": 64530063000,
+              "basic_eps": 14.13
+            }
+          ]
+        },
+        {
+          "provider": "eastmoney",
+          "title": "主要财务指标",
+          "status": "ok",
+          "reason": "公开补充 / 回退：与主源分列核验",
+          "fetchedAt": "2026-10-30T02:55:13.210Z",
+          "asOf": "2026-09-30",
+          "latency": 719,
+          "retries": 0
+        },
+        {
+          "provider": "eastmoney",
+          "title": "利润表",
+          "status": "ok",
+          "reason": "公开补充 / 回退：与主源分列核验",
+          "fetchedAt": "2026-10-30T02:55:13.212Z",
+          "asOf": "2026-09-30",
+          "latency": 843,
+          "retries": 0
+        },
+        {
+          "provider": "fuyao",
+          "title": "估值TTM/MRQ",
+          "status": "ok",
+          "reason": "主数据源：扶摇 REST",
+          "fetchedAt": "2026-10-30T02:55:14.055Z",
+          "asOf": "2026-10-30T02:55:14.000Z",
+          "latency": 287,
+          "retries": 0,
+          "sample": [
+            {
+              "thscode": "300750.SZ",
+              "ticker": "300750",
+              "name": "宁德时代",
+              "pe_ttm": 12.267611,
+              "pe_mrq": 12.503888,
+              "pb_mrq": 2.780792,
+              "ps_ttm": 2.530252,
+              "pcf_ttm": 9.421861
+            }
+          ]
+        },
+        {
+          "provider": "fuyao",
+          "title": "历史K线",
+          "status": "ok",
+          "reason": "主数据源：扶摇 REST",
+          "fetchedAt": "2026-10-30T02:55:14.973Z",
+          "asOf": "2026-10-29T16:00:00.000Z",
+          "latency": 285,
+          "retries": 0,
+          "sample": [
+            {
+              "date_ms": 1783008000000,
+              "volume": 25884940,
+              "turnover": 9910832542.24,
+              "open_price": 381.96,
+              "high_price": 387.95,
+              "low_price": 379,
+              "close_price": 380
+            }
+          ]
+        },
+        {
+          "provider": "eastmoney",
+          "title": "日K线",
+          "status": "error",
+          "reason": "公开补充 / 回退：与主源分列核验；fetch failed；已重试一次",
+          "fetchedAt": "2026-10-30T02:55:15.258Z",
+          "asOf": "未取得",
+          "latency": 1631,
+          "retries": 1
+        },
+        {
+          "provider": "ifind",
+          "title": "iFinD 公告片段",
+          "status": "ok",
+          "reason": "主数据源：iFinD search_notice 公告语义片段；不是全文或定量字段",
+          "fetchedAt": "2026-10-30T02:55:16.889Z",
+          "asOf": "2026-10-21",
+          "latency": 6904,
+          "retries": 0,
+          "sample": [
+            {
+              "公告标题": "宁德时代：2026年三季度报告",
+              "公告片段内容": "| 项目 | 本报告期金额 | 年初至报告期期末金额 | 说明 |。| 非流动性资产处置损益（包括已计提资产减值准备的冲销部分） | 75,810 | 304,491 | |。 | 除同公司正常经营业务相关的有效套期保值业务外，非金融企业持有金融资产和金融负债产生的公允价值变动损益以及处置金融资产和金融负债产生的损益 | 1,454,436 | 2,990,455 | |。 | 项目 | 本报告期金额 | 年初至报告期期末金额 | 说明…",
+              "日期": "2026-10-21"
+            }
+          ]
+        },
+        {
+          "provider": "cninfo",
+          "title": "公司公告",
+          "status": "ok",
+          "reason": "公开补充 / 回退：CNINFO 原始公告入口",
+          "fetchedAt": "2026-10-30T02:55:23.794Z",
+          "asOf": "2026-03-09",
+          "latency": 1263,
+          "retries": 0
+        }
+      ],
+      "officialEvidence": [
+        {
+          "provider": "fuyao",
+          "title": "扶摇行情快照",
+          "metric": "quotePrice",
+          "period": "2026-10-30T02:55:09.000Z",
+          "unit": "元",
+          "basis": "最新成交价；CNY",
+          "asOf": "2026-10-30T02:55:09.000Z",
+          "values": {
+            "price": 232.54
+          }
+        },
+        {
+          "provider": "fuyao",
+          "title": "扶摇合并营业收入",
+          "metric": "operating_income",
+          "period": "2026-09-30",
+          "unit": "元",
+          "basis": "合并利润表；年初至报告期末累计；CNY",
+          "asOf": "2026-09-30",
+          "values": {
+            "operating_income": 442137424000
+          }
+        },
+        {
+          "provider": "fuyao",
+          "title": "扶摇合并营业利润",
+          "metric": "operating_profit",
+          "period": "2026-09-30",
+          "unit": "元",
+          "basis": "合并利润表；年初至报告期末累计；CNY",
+          "asOf": "2026-09-30",
+          "values": {
+            "operating_profit": 80933059000
+          }
+        },
+        {
+          "provider": "fuyao",
+          "title": "扶摇合并归母净利润",
+          "metric": "parent_holder_net_profit",
+          "period": "2026-09-30",
+          "unit": "元",
+          "basis": "合并利润表；年初至报告期末累计；CNY",
+          "asOf": "2026-09-30",
+          "values": {
+            "parent_holder_net_profit": 64530063000
+          }
+        },
+        {
+          "provider": "fuyao",
+          "title": "扶摇市盈率 TTM",
+          "metric": "pe_ttm",
+          "period": "2026-10-30T02:55:14.000Z",
+          "unit": "倍",
+          "basis": "TTM",
+          "asOf": "2026-10-30T02:55:14.000Z",
+          "values": {
+            "pe_ttm": 12.27
+          }
+        },
+        {
+          "provider": "fuyao",
+          "title": "扶摇市盈率 MRQ",
+          "metric": "pe_mrq",
+          "period": "2026-10-30T02:55:14.000Z",
+          "unit": "倍",
+          "basis": "MRQ",
+          "asOf": "2026-10-30T02:55:14.000Z",
+          "values": {
+            "pe_mrq": 12.5
+          }
+        },
+        {
+          "provider": "fuyao",
+          "title": "扶摇市净率 MRQ",
+          "metric": "pb_mrq",
+          "period": "2026-10-30T02:55:14.000Z",
+          "unit": "倍",
+          "basis": "MRQ",
+          "asOf": "2026-10-30T02:55:14.000Z",
+          "values": {
+            "pb_mrq": 2.78
+          }
+        },
+        {
+          "provider": "fuyao",
+          "title": "扶摇价格背景",
+          "metric": "priceChange",
+          "period": "2026-07-03 至 2026-10-30",
+          "unit": "%",
+          "basis": "不复权窗口首尾",
+          "asOf": "2026-10-29T16:00:00.000Z",
+          "values": {
+            "change": -38.8
+          }
+        },
+        {
+          "provider": "ifind",
+          "title": "宁德时代：2026年三季度报告",
+          "metric": "reportBody",
+          "period": "2026-10-21",
+          "unit": "原文片段（未结构化）",
+          "basis": "公告语义检索；非全文",
+          "asOf": "2026-10-21",
+          "values": {}
+        },
+        {
+          "provider": "ifind",
+          "title": "宁德时代：2026年三季度报告",
+          "metric": "reportBody",
+          "period": "2026-10-21",
+          "unit": "原文片段（未结构化）",
+          "basis": "公告语义检索；非全文",
+          "asOf": "2026-10-21",
+          "values": {}
+        }
+      ]
+    },
+    {
+      "company": {
+        "code": "002594",
+        "name": "比亚迪"
+      },
+      "numberCheck": {
+        "ok": true,
+        "rejected": []
+      },
+      "conflicts": [
+        {
+          "title": "跨供应商字段 / 报告期分歧：扶摇合并营业收入",
+          "evidenceIds": [
+            "E4",
+            "E7"
+          ],
+          "resolution": "报告期或统计口径不一致，不能直接比较；保留两值，不平均、不覆盖。营业收入与营业总收入等范围差异必须先对齐。"
+        },
+        {
+          "title": "跨供应商字段 / 报告期分歧：扶摇行情快照",
+          "evidenceIds": [
+            "E1",
+            "E2"
+          ],
+          "resolution": "报告期或统计口径不一致，不能直接比较；保留两值，不平均、不覆盖。营业收入与营业总收入等范围差异必须先对齐。"
+        },
+        {
+          "title": "跨供应商估值口径不同",
+          "evidenceIds": [
+            "E14",
+            "E3"
+          ],
+          "resolution": "扶摇 TTM / MRQ 与公开动态 PE 并列；不是同口径数值冲突，不能平均、互换或按大小选择。"
+        },
+        {
+          "title": "同源交叉核验：扣非口径一致",
+          "evidenceIds": [
+            "E11",
+            "E13"
+          ],
+          "resolution": "主要指标与利润表在显示精度内一致；均为二手转录，没有独立一手核验。更正公告或更新版本优先，但需人工核读原始 PDF 后才能解决。"
+        }
+      ],
+      "sources": [
+        {
+          "provider": "fuyao",
+          "title": "行情快照",
+          "status": "ok",
+          "reason": "主数据源：扶摇 REST",
+          "fetchedAt": "2026-10-30T02:55:25.057Z",
+          "asOf": "2026-10-30T02:55:24.000Z",
+          "latency": 803,
+          "retries": 0,
+          "sample": [
+            {
+              "thscode": "002594.SZ",
+              "ticker": "002594",
+              "volume": 12865946,
+              "turnover": 1049287950,
+              "last_price": 82.18,
+              "price_change": -0.32,
+              "price_change_ratio_pct": -0.387879,
+              "open_price": 80.49,
+              "high_price": 82.6,
+              "low_price": 80.22,
+              "prev_price": 82.5
+            }
+          ]
+        },
+        {
+          "provider": "eastmoney",
+          "title": "行情与估值",
+          "status": "ok",
+          "reason": "公开补充 / 回退：与主源分列核验",
+          "fetchedAt": "2026-10-30T02:55:42.154Z",
+          "asOf": "行情时点未知",
+          "latency": 2631,
+          "retries": 0
+        },
+        {
+          "provider": "fuyao",
+          "title": "合并利润表",
+          "status": "ok",
+          "reason": "主数据源：扶摇 REST",
+          "fetchedAt": "2026-10-30T02:55:39.866Z",
+          "asOf": "2026-09-30",
+          "latency": 888,
+          "retries": 0,
+          "sample": [
+            {
+              "thscode": "002594.SZ",
+              "ticker": "002594",
+              "period": "quarterly",
+              "fiscal_year": 2026,
+              "fiscal_period": "Q3",
+              "report_date_ms": 1793289600000,
+              "period_end_ms": 1790697600000,
+              "currency": "CNY",
+              "operating_income": 566303672000,
+              "operating_costs": 461428568000,
+              "operating_expenses": 547950730000,
+              "sales_fee": 20199335000,
+              "manage_fee": 15375141000,
+              "research_and_development_expenses": 36277138000,
+              "operating_profit": 27011743000,
+              "interest_expenses": null,
+              "profit_total": 26700932000,
+              "income_tax_expense": 4156833000,
+              "net_profit": 22544099000,
+              "parent_holder_net_profit": 22344978000,
+              "basic_eps": 2.45
+            }
+          ]
+        },
+        {
+          "provider": "eastmoney",
+          "title": "主要财务指标",
+          "status": "ok",
+          "reason": "公开补充 / 回退：与主源分列核验",
+          "fetchedAt": "2026-10-30T02:55:40.754Z",
+          "asOf": "2026-09-30",
+          "latency": 1115,
+          "retries": 0
+        },
+        {
+          "provider": "eastmoney",
+          "title": "利润表",
+          "status": "ok",
+          "reason": "公开补充 / 回退：与主源分列核验",
+          "fetchedAt": "2026-10-30T02:55:40.755Z",
+          "asOf": "2026-09-30",
+          "latency": 637,
+          "retries": 0
+        },
+        {
+          "provider": "fuyao",
+          "title": "估值TTM/MRQ",
+          "status": "ok",
+          "reason": "主数据源：扶摇 REST",
+          "fetchedAt": "2026-10-30T02:55:41.869Z",
+          "asOf": "2026-10-30T02:55:42.000Z",
+          "latency": 285,
+          "retries": 0,
+          "sample": [
+            {
+              "thscode": "002594.SZ",
+              "ticker": "002594",
+              "name": "比亚迪",
+              "pe_ttm": 23.681611,
+              "pe_mrq": 25.142191,
+              "pb_mrq": 3.008639,
+              "ps_ttm": 0.870612,
+              "pcf_ttm": 10.295119
+            }
+          ]
+        },
+        {
+          "provider": "fuyao",
+          "title": "历史K线",
+          "status": "ok",
+          "reason": "主数据源：扶摇 REST",
+          "fetchedAt": "2026-10-30T02:55:44.786Z",
+          "asOf": "2026-10-29T16:00:00.000Z",
+          "latency": 280,
+          "retries": 0,
+          "sample": [
+            {
+              "date_ms": 1783008000000,
+              "volume": 83898162,
+              "turnover": 7298140284.07,
+              "open_price": 83.73,
+              "high_price": 88.88,
+              "low_price": 83.6,
+              "close_price": 88.47
+            }
+          ]
+        },
+        {
+          "provider": "eastmoney",
+          "title": "日K线",
+          "status": "error",
+          "reason": "公开补充 / 回退：与主源分列核验；fetch failed；已重试一次",
+          "fetchedAt": "2026-10-30T02:55:45.066Z",
+          "asOf": "未取得",
+          "latency": 1571,
+          "retries": 1
+        },
+        {
+          "provider": "ifind",
+          "title": "iFinD 公告片段",
+          "status": "error",
+          "reason": "iFinD MCP 连接 / 调用失败或超时；已重试一次，转公开 CNINFO 公告入口",
+          "fetchedAt": "2026-10-30T02:55:46.637Z",
+          "asOf": "未取得",
+          "latency": 20669,
+          "retries": 1
+        },
+        {
+          "provider": "cninfo",
+          "title": "公司公告",
+          "status": "ok",
+          "reason": "公开回退：iFinD 不可用，CNINFO 公告入口",
+          "fetchedAt": "2026-10-30T02:56:07.307Z",
+          "asOf": "2026-03-30",
+          "latency": 1196,
+          "retries": 0
+        }
+      ],
+      "officialEvidence": [
+        {
+          "provider": "fuyao",
+          "title": "扶摇行情快照",
+          "metric": "quotePrice",
+          "period": "2026-10-30T02:55:24.000Z",
+          "unit": "元",
+          "basis": "最新成交价；CNY",
+          "asOf": "2026-10-30T02:55:24.000Z",
+          "values": {
+            "price": 82.18
+          }
+        },
+        {
+          "provider": "fuyao",
+          "title": "扶摇合并营业收入",
+          "metric": "operating_income",
+          "period": "2026-09-30",
+          "unit": "元",
+          "basis": "合并利润表；年初至报告期末累计；CNY",
+          "asOf": "2026-09-30",
+          "values": {
+            "operating_income": 566303672000
+          }
+        },
+        {
+          "provider": "fuyao",
+          "title": "扶摇合并营业利润",
+          "metric": "operating_profit",
+          "period": "2026-09-30",
+          "unit": "元",
+          "basis": "合并利润表；年初至报告期末累计；CNY",
+          "asOf": "2026-09-30",
+          "values": {
+            "operating_profit": 27011743000
+          }
+        },
+        {
+          "provider": "fuyao",
+          "title": "扶摇合并归母净利润",
+          "metric": "parent_holder_net_profit",
+          "period": "2026-09-30",
+          "unit": "元",
+          "basis": "合并利润表；年初至报告期末累计；CNY",
+          "asOf": "2026-09-30",
+          "values": {
+            "parent_holder_net_profit": 22344978000
+          }
+        },
+        {
+          "provider": "fuyao",
+          "title": "扶摇市盈率 TTM",
+          "metric": "pe_ttm",
+          "period": "2026-10-30T02:55:42.000Z",
+          "unit": "倍",
+          "basis": "TTM",
+          "asOf": "2026-10-30T02:55:42.000Z",
+          "values": {
+            "pe_ttm": 23.68
+          }
+        },
+        {
+          "provider": "fuyao",
+          "title": "扶摇市盈率 MRQ",
+          "metric": "pe_mrq",
+          "period": "2026-10-30T02:55:42.000Z",
+          "unit": "倍",
+          "basis": "MRQ",
+          "asOf": "2026-10-30T02:55:42.000Z",
+          "values": {
+            "pe_mrq": 25.14
+          }
+        },
+        {
+          "provider": "fuyao",
+          "title": "扶摇市净率 MRQ",
+          "metric": "pb_mrq",
+          "period": "2026-10-30T02:55:42.000Z",
+          "unit": "倍",
+          "basis": "MRQ",
+          "asOf": "2026-10-30T02:55:42.000Z",
+          "values": {
+            "pb_mrq": 3.01
+          }
+        },
+        {
+          "provider": "fuyao",
+          "title": "扶摇价格背景",
+          "metric": "priceChange",
+          "period": "2026-07-03 至 2026-10-30",
+          "unit": "%",
+          "basis": "不复权窗口首尾",
+          "asOf": "2026-10-29T16:00:00.000Z",
+          "values": {
+            "change": -7.13
+          }
+        },
+        {
+          "provider": "ifind",
+          "title": "iFinD 公告片段不可用",
+          "metric": "source",
+          "period": "未取得",
+          "unit": "不适用",
+          "basis": "累计报告期同比",
+          "asOf": "未取得",
+          "values": {}
+        }
+      ]
+    }
+  ]
+}

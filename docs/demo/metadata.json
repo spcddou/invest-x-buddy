@@ -1,0 +1,11 @@
+{
+  "durationSeconds": 123.08,
+  "width": 1280,
+  "height": 800,
+  "path": "docs/demo/demo.mp4",
+  "liveURL": "https://thesis-lab-mu.vercel.app",
+  "captioned": true,
+  "recordedAt": "2026-10-30T03:00:32.403Z",
+  "screenshots": 13,
+  "decodedSuccessfully": true
+}

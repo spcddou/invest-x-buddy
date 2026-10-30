@@ -1,0 +1,11 @@
+node_modules/
+.next/
+.vercel/
+.env*
+test-results/
+playwright-report/
+docs/demo/raw/
+docs/demo/demo.webm
+
+*.tsbuildinfo
+coverage/

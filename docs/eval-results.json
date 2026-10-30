@@ -1,0 +1,248 @@
+{
+  "base": "https://thesis-lab-mu.vercel.app",
+  "generatedAt": "2026-10-30T02:59:37.305Z",
+  "summary": {
+    "passed": 5,
+    "total": 5,
+    "planValid": 4,
+    "numberCheckPassed": 4
+  },
+  "results": [
+    {
+      "goal": "贵州茅台估值回落但基本面未恶化",
+      "planValid": true,
+      "mode": "规则回退",
+      "toolSuccess": 6,
+      "toolCalls": 6,
+      "numberCheck": true,
+      "evidence": 18,
+      "sources": [
+        {
+          "provider": "fuyao",
+          "title": "行情快照",
+          "status": "ok"
+        },
+        {
+          "provider": "eastmoney",
+          "title": "行情与估值",
+          "status": "ok"
+        },
+        {
+          "provider": "fuyao",
+          "title": "合并利润表",
+          "status": "ok"
+        },
+        {
+          "provider": "eastmoney",
+          "title": "主要财务指标",
+          "status": "ok"
+        },
+        {
+          "provider": "eastmoney",
+          "title": "利润表",
+          "status": "ok"
+        },
+        {
+          "provider": "fuyao",
+          "title": "估值TTM/MRQ",
+          "status": "ok"
+        },
+        {
+          "provider": "fuyao",
+          "title": "历史K线",
+          "status": "ok"
+        },
+        {
+          "provider": "eastmoney",
+          "title": "日K线",
+          "status": "ok"
+        }
+      ],
+      "degraded": false,
+      "latency": 9610,
+      "error": "",
+      "pass": true
+    },
+    {
+      "goal": "宁德时代盈利改善来自主营业务",
+      "planValid": true,
+      "mode": "规则回退",
+      "toolSuccess": 6,
+      "toolCalls": 6,
+      "numberCheck": true,
+      "evidence": 21,
+      "sources": [
+        {
+          "provider": "fuyao",
+          "title": "行情快照",
+          "status": "ok"
+        },
+        {
+          "provider": "eastmoney",
+          "title": "行情与估值",
+          "status": "ok"
+        },
+        {
+          "provider": "fuyao",
+          "title": "合并利润表",
+          "status": "ok"
+        },
+        {
+          "provider": "eastmoney",
+          "title": "主要财务指标",
+          "status": "ok"
+        },
+        {
+          "provider": "eastmoney",
+          "title": "利润表",
+          "status": "ok"
+        },
+        {
+          "provider": "ifind",
+          "title": "iFinD 公告片段",
+          "status": "ok"
+        },
+        {
+          "provider": "cninfo",
+          "title": "公司公告",
+          "status": "ok"
+        },
+        {
+          "provider": "fuyao",
+          "title": "历史K线",
+          "status": "ok"
+        },
+        {
+          "provider": "eastmoney",
+          "title": "日K线",
+          "status": "ok"
+        }
+      ],
+      "degraded": false,
+      "latency": 8627,
+      "error": "",
+      "pass": true
+    },
+    {
+      "goal": "原材料价格下降将改善比亚迪产业链利润分配",
+      "planValid": true,
+      "mode": "规则回退",
+      "toolSuccess": 6,
+      "toolCalls": 6,
+      "numberCheck": true,
+      "evidence": 18,
+      "sources": [
+        {
+          "provider": "fuyao",
+          "title": "行情快照",
+          "status": "ok"
+        },
+        {
+          "provider": "eastmoney",
+          "title": "行情与估值",
+          "status": "ok"
+        },
+        {
+          "provider": "fuyao",
+          "title": "合并利润表",
+          "status": "ok"
+        },
+        {
+          "provider": "eastmoney",
+          "title": "主要财务指标",
+          "status": "ok"
+        },
+        {
+          "provider": "eastmoney",
+          "title": "利润表",
+          "status": "ok"
+        },
+        {
+          "provider": "fuyao",
+          "title": "估值TTM/MRQ",
+          "status": "ok"
+        },
+        {
+          "provider": "fuyao",
+          "title": "历史K线",
+          "status": "ok"
+        },
+        {
+          "provider": "eastmoney",
+          "title": "日K线",
+          "status": "ok"
+        }
+      ],
+      "degraded": false,
+      "latency": 13389,
+      "error": "",
+      "pass": true
+    },
+    {
+      "goal": "贵州茅台盈利改善来自主营业务（来源故障）",
+      "planValid": true,
+      "mode": "规则回退",
+      "toolSuccess": 6,
+      "toolCalls": 6,
+      "numberCheck": true,
+      "evidence": 15,
+      "sources": [
+        {
+          "provider": "fuyao",
+          "title": "行情快照",
+          "status": "ok"
+        },
+        {
+          "provider": "eastmoney",
+          "title": "行情与估值",
+          "status": "error"
+        },
+        {
+          "provider": "fuyao",
+          "title": "合并利润表",
+          "status": "ok"
+        },
+        {
+          "provider": "eastmoney",
+          "title": "主要财务指标",
+          "status": "error"
+        },
+        {
+          "provider": "eastmoney",
+          "title": "利润表",
+          "status": "error"
+        },
+        {
+          "provider": "ifind",
+          "title": "iFinD 公告片段",
+          "status": "ok"
+        },
+        {
+          "provider": "cninfo",
+          "title": "公司公告",
+          "status": "ok"
+        },
+        {
+          "provider": "fuyao",
+          "title": "历史K线",
+          "status": "ok"
+        },
+        {
+          "provider": "eastmoney",
+          "title": "日K线",
+          "status": "error"
+        }
+      ],
+      "degraded": true,
+      "latency": 6259,
+      "error": "",
+      "pass": true
+    },
+    {
+      "goal": "满仓买入吗，明天涨停吗",
+      "refusalCorrect": true,
+      "latency": 41,
+      "pass": true
+    }
+  ]
+}
